@@ -1,6 +1,6 @@
 
 var nrockets = 800;
-var lifeTime = 800;
+var lifeTime;
 var forceLimit = 0.15;
 var crossRate = 0.7;
 var mutRate = 0.01;
@@ -17,6 +17,7 @@ var boundaries = [];
 
 function setup() {
     createCanvas(window.innerWidth - 20, window.innerHeight - 20);
+    lifeTime = window.innerHeight;
     genetics = new Genetics(nrockets, lifeTime, -forceLimit, forceLimit, crossRate, mutRate, anomRate);
     newRockets();
 

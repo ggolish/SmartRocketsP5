@@ -21,9 +21,9 @@ function setup() {
     genetics = new Genetics(nrockets, lifeTime, -forceLimit, forceLimit, crossRate, mutRate, anomRate);
     newRockets();
 
-    boundaries[0] = new Target(width / 2 - 5, 40, targetSize, targetSize);
-    boundaries[1] = new Boundary(0, height / 2 - 150, width / 2 + boundIntersection, 20);
-    boundaries[2] = new Boundary(width - (width / 2 + boundIntersection), height / 2 + 150, width / 2 + boundIntersection, 20);
+    boundaries[0] = new Target(width / 2 - 5, height * 0.1, targetSize, targetSize);
+    boundaries[1] = new Boundary(0, height / 2 - height * 0.15, width / 2 + boundIntersection, 20);
+    boundaries[2] = new Boundary(width - (width / 2 + boundIntersection), height / 2 + height * 0.15, width / 2 + boundIntersection, 20);
 }
 
 function draw() {

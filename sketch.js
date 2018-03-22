@@ -56,9 +56,9 @@ function displayStatus() {
     fill(255);
     textFont("Monospace");
     text(" Generation: " + genetics.generation, 10, 20);
-    text("  Anomalies: " + genetics.anoms, 10, 35);
-    text(" Crossovers: " + genetics.crosses, 10, 50);
-    text("  Mutations: " + genetics.muts, 10, 65);
+    text("  Anomalies: " + genetics.anomsRate.toFixed(2) + "%", 10, 35);
+    text(" Crossovers: " + genetics.crossesRate.toFixed(2) + "%", 10, 50);
+    text("  Mutations: " + genetics.mutsRate.toFixed(2) + "%", 10, 65);
     text("Frames Left: " + (lifeTime - (frameCount % lifeTime)), 10, 80);
 }
 

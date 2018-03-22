@@ -12,10 +12,19 @@ class Genetics {
         this.fitnesses = [];
         this.population = this.newPopulation();
         this.maxFit = 0;
+
         this.generation = 1;
         this.muts = 0;
         this.crosses = 0;
         this.anoms = 0;
+
+        this.mutsTotal = 0;
+        this.crossesTotal = 0;
+        this.anomsTotal = 0;
+
+        this.mutsRate = 0.0;
+        this.crossesRate = 0.0;
+        this.anomsRate = 0.0;
     }
 
     newPopulation() {
@@ -46,6 +55,9 @@ class Genetics {
         this.muts = 0;
         this.crosses = 0;
         this.anoms = 0;
+        this.mutsTotal = 0;
+        this.crossesTotal = 0;
+        this.anomsTotal = 0;
 
         // Calculate max fitness
         this.maxFit = 0;
@@ -58,8 +70,9 @@ class Genetics {
 
         while(newPop.length < this.population.length) {
             var prob = random(0, 1);
+            this.anomsTotal++;
             if(prob < this.anomRate) {
-                this.anoms += 2;
+                this.anoms++;
                 var c1 = this.newChromosome();
                 var c2 = this.newChromosome();
             } else {
@@ -75,6 +88,9 @@ class Genetics {
 
         this.population = newPop;
         this.generation++;
+        this.mutsRate = (this.muts / this.mutsTotal) * 100;
+        this.crossesRate = (this.crosses / this.crossesTotal) * 100;
+        this.anomsRate = (this.anoms / this.anomsTotal) * 100;
     }
 
     choose() {
@@ -88,6 +104,7 @@ class Genetics {
 
     crossover(c1, c2) {
         var prob = random(0, 1);
+        this.crossesTotal++;
         if(prob < this.crossRate) {
             this.crosses++;
             var crossPoint = round(random(0, this.chromoSz - 1));
@@ -103,6 +120,7 @@ class Genetics {
     mutate(c) {
         for(var i = 0; i < this.chromoSz; ++i) {
             var prob = random(0, 1);
+            this.mutsTotal++;
             if(prob < this.mutRate) {
                 this.muts++;
                 c[i] = this.newGene();

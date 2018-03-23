@@ -14,6 +14,7 @@ var genetics;
 var bestRocket = 0;
 
 var boundaries = [];
+var from;
 
 function setup() {
     createCanvas(window.innerWidth - 20, window.innerHeight - 20);
@@ -22,8 +23,6 @@ function setup() {
     newRockets();
 
     boundaries[0] = new Target(width / 2 - 5, height * 0.1, targetSize, targetSize);
-    boundaries[1] = new Boundary(0, height / 2 - height * 0.15, width / 2 + boundIntersection, 20);
-    boundaries[2] = new Boundary(width - (width / 2 + boundIntersection), height / 2 + height * 0.15, width / 2 + boundIntersection, 20);
 }
 
 function draw() {
@@ -43,6 +42,11 @@ function draw() {
         boundaries[i].show();
     }
 
+    if(mouseIsPressed) {
+        stroke(255);
+        line(from.x, from.y, mouseX, mouseY);
+    }
+
     calcFitnesses();
     displayStatus();
 
@@ -60,7 +64,7 @@ function displayStatus() {
     text(" Crossovers: " + genetics.crossesRate.toFixed(2) + "%", 10, 50);
     text("  Mutations: " + genetics.mutsRate.toFixed(2) + "%", 10, 65);
     text("Frames Left: " + (lifeTime - (frameCount % lifeTime)), 10, 80);
-}
+}   
 
 function newRockets() {
     rockets = []
@@ -93,6 +97,21 @@ function calcFitnesses() {
     }
 }
 
+function keyTyped() { 
+    if(key == ' ') {
+        genetics = new Genetics(nrockets, lifeTime, -forceLimit, forceLimit, crossRate, mutRate, anomRate);
+        newRockets();
+    }
+}
+
 function mousePressed() {
-    boundaries[0].move(mouseX, mouseY);
+    from = createVector(mouseX, mouseY);
+}
+
+function mouseReleased() {
+    fromTo = createVector(mouseX - from.x, mouseY - from.y);
+    d = fromTo.mag();
+    var x = (mouseX < from.x) ? mouseX : from.x;
+    var y = (mouseX < from.x) ? mouseY : from.y;
+    boundaries.push(new Boundary(x, y, d, 10));
 }

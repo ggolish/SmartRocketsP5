@@ -1,6 +1,12 @@
+var canvas;
+var lifeSpanSlider;
+var anomsSlider;
+var crossesSlider;
+var mutsSlider;
 
-var nrockets = 800;
+var nrockets = 500;
 var lifeTime;
+var maxLifeTime;
 var forceLimit = 0.15;
 var crossRate = 0.7;
 var mutRate = 0.01;
@@ -17,9 +23,23 @@ var boundaries = [];
 var from;
 
 function setup() {
-    createCanvas(window.innerWidth - 20, window.innerHeight - 20);
-    lifeTime = window.innerHeight;
-    genetics = new Genetics(nrockets, lifeTime, -forceLimit, forceLimit, crossRate, mutRate, anomRate);
+
+    canvas = createCanvas(800, 600);
+    canvas.parent('canvasDiv');
+
+    lifeTime = height;
+    maxLifeTime = 4 * height;
+    lifeSpanSlider = createSlider(10, maxLifeTime, lifeTime, 10);
+    anomsSlider = createSlider(0, 1, anomRate, 0.01);
+    crossesSlider = createSlider(0, 1, crossRate, 0.1);
+    mutsSlider = createSlider(0, 0.5, mutRate, 0.01);
+
+    lifeSpanSlider.parent('lifeSpanSlider');
+    anomsSlider.parent('anomsSlider');
+    crossesSlider.parent('crossesSlider');
+    mutsSlider.parent('mutsSlider');
+
+    genetics = new Genetics(nrockets, maxLifeTime, -forceLimit, forceLimit, crossRate, mutRate, anomRate);
     newRockets();
 
     boundaries[0] = new Target(width / 2 - 5, height * 0.1, targetSize, targetSize);
@@ -51,6 +71,10 @@ function draw() {
     displayStatus();
 
     if(frameCount % lifeTime == 0) {
+        lifeTime = lifeSpanSlider.value();
+        anomRate = genetics.anomRate = anomsSlider.value();
+        crossRate = genetics.crossRate = crossesSlider.value();
+        mutRate = genetics.mutRate = mutsSlider.value();
         genetics.repopulate();
         newRockets();
     }
@@ -99,7 +123,7 @@ function calcFitnesses() {
 
 function keyTyped() { 
     if(key == ' ') {
-        genetics = new Genetics(nrockets, lifeTime, -forceLimit, forceLimit, crossRate, mutRate, anomRate);
+        genetics = new Genetics(nrockets, maxLifeTime, -forceLimit, forceLimit, crossRate, mutRate, anomRate);
         newRockets();
     }
 }

@@ -1,31 +1,45 @@
+function rotatePointX(x, y, point, a) {
+    return (x - point.x) * cos(a) - (y - point.y) * sin(a);
+}
+
+function rotatePointY(x, y, point, a) {
+    return (x - point.x) * sin(a) + (y - point.y) * cos(a);
+}
 
 class Boundary {
-    constructor(x, y, width, height) {
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
+    constructor(x, y, w, h, a) {
+        //a *= -(PI / 180);
+        this.center = createVector(x, y);
+        this.vertices = [];
+        this.vertices.push(createVector(rotatePointX(x, y, this.center, a), rotatePointY(x, y, this.center, a)));
+        this.vertices.push(createVector(rotatePointX(x + w, y, this.center, a), rotatePointY(x + w, y, this.center, a)))
+        this.vertices.push(createVector(rotatePointX(x + w, y + h, this.center, a), rotatePointY(x + w, y + h, this.center, a)));
+        this.vertices.push(createVector(rotatePointX(x, y + h, this.center, a), rotatePointY(x, y + h, this.center, a)));
+
+        this.vertices.map(v => v.add(this.center));
+
         this.reward = 0.1;
     }
 
     show() {
         fill(255);
         noStroke();
-        rect(this.x, this.y, this.width, this.height);
+
+        beginShape(QUADS);
+        for(var i = 0; i < this.vertices.length; ++i) {
+            vertex(this.vertices[i].x, this.vertices[i].y);
+        }
+        endShape(CLOSE);
+    }
+
+    collidesWith(x, y) {
+        return collidePointPoly(x, y, this.vertices);
     }
 }
 
 class Target extends Boundary {
-    constructor(x, y, width, height) {
-        super(x, y, width, height);
+    constructor(x, y, w, h) {
+        super(x, y, w, h, 0);
         this.reward = 10;
-        this.v = createVector(x + this.width / 2, y + this.height / 2);
-    }
-
-    move(x, y) {
-        this.x = x;
-        this.y = y;
-        this.v.x = x;
-        this.v.y = y;
     }
 }

@@ -77,7 +77,7 @@ function calcFitnesses() {
     var maxFit = 0;
     for(var i = 0; i < rockets.length; ++i) {
         if(!rockets[i].crashed && !rockets[i].finished) {
-            var distance = rockets[i].pos.dist(boundaries[0].v);
+            var distance = rockets[i].pos.dist(boundaries[0].center);
             rockets[i].fitness = 1 / distance;
             if(rockets[i].fitness > maxFit) {
                 maxFit = rockets[i].fitness;
@@ -109,9 +109,8 @@ function mousePressed() {
 }
 
 function mouseReleased() {
-    fromTo = createVector(mouseX - from.x, mouseY - from.y);
+    to = createVector(mouseX, mouseY);
+    fromTo = createVector(to.x - from.x, to.y - from.y);
     d = fromTo.mag();
-    var x = (mouseX < from.x) ? mouseX : from.x;
-    var y = (mouseX < from.x) ? mouseY : from.y;
-    boundaries.push(new Boundary(x, y, d, 10));
+    boundaries.push(new Boundary(from.x, from.y, d, 10, fromTo.heading()));
 }

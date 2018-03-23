@@ -44,12 +44,10 @@ class Rocket {
 
     collides(boundary) {
         if(this.crashed) return;
-        if(this.pos.x > boundary.x && this.pos.x < boundary.x + boundary.width) {
-            if(this.pos.y > boundary.y && this.pos.y < boundary.y + boundary.height) {
-                this.finised = true;
-                this.crashed = true;
-                this.fitness *= boundary.reward + boundary.reward * (1 / this.timeAlive);
-            }
+        if(boundary.collidesWith(this.pos.x, this.pos.y)) {
+            this.finised = true;
+            this.crashed = true;
+            this.fitness *= boundary.reward + boundary.reward * (1 / this.timeAlive);
         }
     }
 

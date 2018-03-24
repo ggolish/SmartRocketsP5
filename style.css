@@ -1,0 +1,50 @@
+body {
+    background-color: black;
+}
+
+#page-content {
+    margin: auto;
+    width: 100%;
+    min-width: 800px;
+    border: 1px solid black;
+    background: linear-gradient(rgb(255, 50, 100), rgb(0, 50, 100));
+    color: white;
+    font-family: monospace;
+}
+
+#canvasDiv {
+    margin: auto;
+    width: 800px;
+    height: 600px;
+    border: 10px solid white;
+    margin-bottom: 20px;
+}
+
+h1, p {
+    text-align: center;
+    text-shadow: 2px 2px 2px black;
+    font-style: italic;
+}
+
+a, a:visited {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-style: normal;
+}
+
+table {
+    margin: auto;
+    width: 800px;
+}
+
+td:first-child {
+    width: 125px;
+    text-align: right;
+    text-shadow: 2px 2px 2px black;
+    font-style: italic;
+}
+
+input[type=range] {
+    width: 100%;
+}

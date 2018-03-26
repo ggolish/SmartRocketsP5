@@ -1,5 +1,6 @@
 # Smart Rockets
 Genetic algorithms simulation in JavaScript using the P5 library.
+View the simulation at the project's [GitHub Pages site](https://ggolish.github.io/SmartRocketsP5/).
 
 ## Sources
 Inspiration comes from the original [Smart Rockets](http://www.blprnt.com/smartrockets/) project and [Daniel Shiffman's
